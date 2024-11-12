@@ -29,9 +29,9 @@ foobar.singularize('phenomena')
 Everytime you want to get the latest version of code
 ```
 git pull
+git merge main
 ```
-
-Please make sure to update tests as appropriate.
+Please make sure to update code as appropriate.
 
 ## License
 
