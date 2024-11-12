@@ -12,13 +12,13 @@ npm install
 ## Usage
 
 ```python
-import foobar
+# change branch to feature/<your firstnam, 1 từ>
+git checkout feature/<firstname>
 
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
+# update code in your branch
+git add .
+git commit -m "message"
+git push -u origin <your branch name>
 
 # returns 'phenomenon'
 foobar.singularize('phenomena')
