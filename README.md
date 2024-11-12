@@ -19,9 +19,6 @@ git checkout feature/<firstname>
 git add .
 git commit -m "message"
 git push -u origin <your branch name>
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
 ```
 
 ## Contributing
