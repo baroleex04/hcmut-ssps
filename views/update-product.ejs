@@ -1,0 +1,42 @@
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/">
+            <h3>Home page</h3>
+        </a>
+        <h2>UPDATE PRODUCT</h2>
+        <form action="/<%= product._id %>" method="POST">
+            <div class="form-group">
+                <label>Product ID</label>
+                <input class="form-control" type="text" name='productId' value="<%= product._id %>" disabled>
+            </div>
+            <div class="form-group">
+                <label>Product name</label>
+                <input class="form-control" type="text" name='productName' value="<%= product.name %>">
+            </div>
+            <div class="form-group">
+                <label>Product type</label>
+                <input class="form-control" type="text" name='productType' value="<%= product.type %>">
+            </div>
+            <input id="update-btn" class="btn btn-primary" type="submit" value="SAVE">
+            <input id="update-btn" class="btn btn-secondary" type="button" value="DELETE"
+                onclick="handleDeleteProduct('<%= product._id %>')">
+        </form>
+    </div>
+    <script>
+        function handleDeleteProduct(value) {
+            $.ajax({
+                url: '/' + value,
+                type: 'DELETE',
+                success: function (result) {
+                    $(location).attr('href', '/');
+                }
+            })
+        }
+    </script>
+</body>
