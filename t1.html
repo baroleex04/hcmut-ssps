@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPSO Home Page</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Logo container */
+        .logo-container {
+            width: 200px;
+            background-color: white;
+            padding: 0px;
+            padding-left: 10px; /* Adjust padding to move logo closer to the left edge */
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            text-align: left; /* Align logo to the left */
+        }
+
+        .logo-container img {
+            width: 120px; /* Increase width to make logo larger */
+            height: auto;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 200px;
+            background-color: #00a7e1;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 120px; /* Add padding to push menu below the logo */
+            margin-top: 100px;
+        }
+
+        .sidebar-icon {
+            margin: 10px left; /* Căn giữa icon trong sidebar */
+            margin-top: -110px;
+            width: 32px; /* Đặt kích thước icon */
+            height: auto; /* Tự động điều chỉnh chiều cao */
+            cursor: pointer;
+        }
+
+        .sidebar .menu {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item {
+            background-color: #d3d3d3;
+            padding: 10px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .menu-item:hover {
+            background-color: #b0b0b0;
+        }
+
+        .submenu {
+            background-color: #00a7e1;
+            color: black;
+            display: none;
+            padding-left: 20px;
+        }
+
+        .submenu a {
+            display: block;
+            padding: 5px 0;
+            color: black;
+            text-decoration: none;
+        }
+
+        .submenu a:hover {
+            text-decoration: underline;
+        }
+
+        .menu-item.active .submenu {
+            display: block;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        .header {
+            position: relative; /* Enable absolute positioning for child elements */
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            font-size: 18px;
+            margin-top: 80px;
+            text-align: center; /* Center-align the text */
+        }
+
+        .header .icons {
+            position: absolute;
+            top: -60px; /* Move the icons above the header text */
+            right: 10px; /* Align to the right */
+            display: flex;
+            gap: 30px;
+        }
+
+        .header .icons .icon {
+            font-size: 18px;
+            color: black; /* Keep text icons black */
+        }
+
+        .header .icons img {
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: middle;
+            width: 24px; /* Set icon width */
+            height: 24px; /* Set icon height */
+        }
+
+        .header .icons span {
+            font-size: 16px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .welcome-text {
+            font-weight: bold;
+            z-index: 1; /* Ensure text remains visible */
+            color:black;
+        }
+
+    </style>
+    <script>
+        // JavaScript to toggle submenu
+        function toggleMenu(event) {
+            const menuItem = event.currentTarget;
+            menuItem.classList.toggle('active');
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Logo container placed above sidebar -->
+    <div class="logo-container">
+        <img src="01_logobachkhoatoi.png" alt="Logo">
+    </div>
+
+    <div class="sidebar">
+        <img class="sidebar-icon" src="icons8-align-justify-48.png" alt="Sidebar Icon">
+        <div class="menu">
+            <div class="menu-item" onclick="toggleMenu(event)">Cấu hình
+                <div class="submenu">
+                    <a href="#">Loại file</a>
+                    <a href="#">Ngày đưa giấy</a>
+                    <a href="#">Số lượng giấy</a>
+                </div>
+            </div>
+            <div class="menu-item" onclick="toggleMenu(event)">Quản lý máy in
+                <div class="submenu">
+                    <a href="#">Thêm</a>
+                    <a href="#">Tiến độ lắp đặt</a>
+                    <a href="#">Trạng thái và bảo trì</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="icons">
+                <span class="icon">Lịch sử in</span> <!-- Placeholder for bell icon -->
+                <span class="icon">Báo Cáo</span> <!-- Placeholder for user icon -->
+                <img class="icon" src="icons8-notification-48.png" alt="Notification Icon" width="32" height="32">
+                <img class="icon" src="icons8-user-32.png" alt="User Icon" width="45" height="45">
+            </div>
+            <div class="welcome-text">Chào mừng bạn đã trở lại, SPSO</div>
+        </div>
+    </div>
+
+</body>
+</html>
