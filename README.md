@@ -12,7 +12,7 @@ npm install
 ## Usage
 
 ```python
-# change branch to feature/<your firstnam, 1 từ>
+# change branch to feature/<your firstname, 1 từ>
 git checkout feature/<firstname>
 
 # update code in your branch
