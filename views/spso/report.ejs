@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <title>SPSO | Report</title>
 </head>
 <body>
     <h1>This page is for SPSO to see the report</h1>
+    <div class="container mt-5">
+        <h1>Activity Reports (Demo)</h1>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (activities.length > 0) { %>
+                    <% activities.forEach(activity => { %>
+                        <tr>
+                            <td><%= activity.id %></td>
+                            <td><%= activity.name %></td>
+                            <td><%= activity.description %></td>
+                            <td><%= new Date(activity.date).toLocaleString() %></td> <!-- format date -->
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4" class="text-center">No activities found</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
