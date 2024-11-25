@@ -21,4 +21,8 @@ router.get("/gift-page", (req, res) => {
     res.render("student/gift-page");
 });
 
+router.get("/view-log", (req, res) => {
+    res.render("student/view-log");
+});
+
 module.exports = router;
