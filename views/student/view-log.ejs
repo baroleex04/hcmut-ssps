@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student | View Log</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <style>
+        table thead tr {
+            background-color: #f0f0f0; /* Màu xám nhạt */
+        }
+
+        .log-list {
+            background-color: white;
+            padding: 20px;
+            margin: 5px auto;
+            width: 60%; 
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <section class="flex">
+            <a href="" class="logo">HCMUT-SSPS</a>
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div class="fas fa-bell"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+            </div>
+            <div class="profile">
+                <img src="" alt="profile">
+                <h3>annoymous stu</h3>
+                <span>student</span>
+                <a href="/student/view-log" class="btn">view print history</a>
+                <div class="flex-btn">
+                    <a href="" class="option-btn">logout</a>
+                    <a href="" class="option-btn">register</a>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="side-bar" id="sidebar">
+        <div id="close-btn">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="profile">
+            <img src="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" alt="profile">
+        </div>
+        <nav class="navbar">
+            <a href="/student/upload"><i class="fas fa-upload"></i><span>upload</span></a>
+            <a href="/student/config"><i class="fas fa-cogs"></i><span>configure</span></a>
+            <a href="/student/buy-page"><i class="fas fa-shopping-cart"></i><span>buying</span></a>
+            <a href="/student/gift-page"><i class="fas fa-gift"></i><span>gifting</span></a>
+        </nav>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+    <div class="log-list">
+        <h1 class="heading">View Print History</h1>
+        <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paper Size</th>
+                    <th>Page Range</th>
+                    <th>Print Type</th>
+                    <th>Copies</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#001</td>
+                    <td>A4</td>
+                    <td>1-5</td>
+                    <td>Double Side</td>
+                    <td>2</td>
+                    <td>2024-11-20</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>A3</td>
+                    <td>1-10</td>
+                    <td>Single Side</td>
+                    <td>1</td>
+                    <td>2024-11-18</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>        
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
