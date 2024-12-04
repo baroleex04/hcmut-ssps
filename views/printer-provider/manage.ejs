@@ -4,8 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Printer-Provider | Manage</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            height: 100vh;
+            width: 100%;
+            font-family: sans-serif;
+            background: #f2f2f2;
+        }
+
+        .container {
+            max-width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 40px;
+            place-items: center;
+            margin: auto;
+            padding: 50px;
+        }
+
+        .box {
+            background: white;
+            text-align: center;
+            box-shadow: -1px 0px 5px 5px rgba(0, 0, 0, 0);
+        }
+
+        .container img {
+            width: 100px;
+            height: 100%;
+        }
+
+        .text {
+            padding: 20px;
+        }
+
+        .text h3 {
+            font-size: 15px;
+        }
+
+        .text p {
+            font-size: 14px;
+            line-height: 18px;
+            margin: 10px 0 10px 0;
+        }
+
+        .button {
+            background: #27c8a4;
+            padding: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    
+    <h1>Manage Printer</h1>
+    <div class="container">
+        <% if (printers.length) { %>
+            <% printers.forEach(printer => { %>
+                <div class="box">
+                    <div class="text">
+                        <h3><%= printer.name %><br /></h3>
+                        <p><%= printer.status %></p>
+                    </div>
+                    <div class="button">
+                        <!-- Edit button -->
+                        <a href="/printer/detail/<%= printer.id %>">Edit</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No printers available.</p>
+        <% } %>
+    </div>
+
+    <h1>Add Printer</h1>
+    <form action="/printer/add" method="post">
+        <div>
+            <label for="name">Printer Name:</label>
+            <input type="text" id="name" name="name" required />
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" style="color: black;">Add Printer</button>
+        </div>
+    </form>
 </body>
 </html>
