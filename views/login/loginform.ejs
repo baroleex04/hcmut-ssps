@@ -1,66 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Form</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <title>Login</title>
+    <link rel="icon" href=
+"https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png"
+        type="image/x-icon" />
+  <%- include('../partials/style'); %>
 </head>
 <body>
-    <header class="header">
-        <section class="flex">
-            <a href="" class="logo">HCMUT-SSPS</a>
-            <div class="icons">
-                <div id="menu-btn" class="fas fa-bars"></div>
-                <div id="search-btn" class="fas fa-search"></div>
-                <div id="user-btn" class="fas fa-user"></div>
-                <!-- <div id="toggle-btn" class="fas fa-sun"></div> -->
-            </div>
-            <div class="profile">
-                <!-- <img src="" alt="profile">
-                <h3>annoymous stu</h3>
-                <span>student</span>
-                <a href="" class="btn">view profile</a> -->
-                <div class="flex-btn">
-                    <a href="/login/auth" class="option-btn">login</a>
-                    <a href="" class="option-btn">register</a>
+    <%- include('../partials/navbar-guest'); %>
+    <section class="vh-92">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                <div class="card-body">
+      
+                  <h3 class="mb-2 text-center">Sign in</h3>
+      
+                  <form id="loginForm">
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input type="username" class="form-control" id="username" aria-describedby="username" placeholder="Username">
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <input type="checkbox" class="form-check-input" id="rememberAccount">
+                            <label class="form-check-label" for="rememberAccount">Remember account</label>
+                        </div>
+                        <a href="/" class="text-end">Forgot password?</a>
+                    </div>
+                    <div class="text-center d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
                 </div>
+              </div>
             </div>
-        </section>
-    </header>
-    <div class="side-bar">
-        <div id="close-btn">
-            <i class="fas fa-times"></i>
-         </div>
-        <div class="profile">
-            <img src="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" alt="profile">
-            <!-- <h3>annoymous stu</h3>
-            <span>student</span>
-            <a href="" class="btn">view profile</a>
-            <div class="flex-btn">
-                <a href="" class="option-btn">login</a>
-                <a href="" class="option-btn">register</a>
-            </div> -->
+          </div>
         </div>
-        <nav class="navbar">
-            <a href=""><i class="fas fa-home"></i><span>homepage</span></a>
-            <a href=""><i class="fas fa-home"></i><span>service</span></a>
-            <a href=""><i class="fas fa-home"></i><span>payment</span></a>
-            <a href=""><i class="fas fa-home"></i><span>policy</span></a>
-        </nav>
-    </div>
-    <section class="form-container">
-       <form action="" method="post">
-        <h3>login form</h3>
-        <p>Enter <span>username</span></p>
-        <input type="text" name="" id="" class="box" placeholder="Example: abcdef">
-        <p>Enter <span>password</span></p>
-        <input type="password" name="" id="" class="box" placeholder="Example: 1234">
-        <input type="submit" value="Login" class="btn">
-       </form>
-    </section>
-    <script src="script.js"></script>
+      </section>
+    <!-- Footer -->
+  <%- include('../partials/footer'); %>
+  <script>
+    // Handle form submission
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevent the form from submitting the default way
+
+      // Get form data
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Simple form validation
+      if (!username || !password) {
+        alert('Please enter both username and password');
+        return;
+      }
+
+      // Check if username is 'spso' and route accordingly
+      if (username === 'spso') {
+        window.location.href = '/spso';  // Redirect to the '/spso' route
+      } else if (username === 'student') {
+        window.location.href = '/student';
+      } else if (username === 'printer') {
+        window.location.href = '/printer';
+      } else {
+        alert('Invalid username or password');  // Handle invalid username
+      }
+    });
+  </script>
 </body>
 </html>
