@@ -3,278 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPSO Home Page</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Logo container */
-        .logo-container {
-            width: 200px;
-            background-color: white;
-            padding: 0px;
-            padding-left: 10px; /* Adjust padding to move logo closer to the left edge */
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            text-align: left; /* Align logo to the left */
-        }
-
-        .logo-container img {
-            width: 120px; /* Increase width to make logo larger */
-            height: auto;
-        }
-
-        /* Sidebar styles */
-        .sidebar {
-            width: 200px;
-            background-color: #00a7e1;
-            color: white;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding-top: 120px; /* Add padding to push menu below the logo */
-            margin-top: 100px;
-        }
-
-        .sidebar-icon {
-            margin: 10px left; /* Căn giữa icon trong sidebar */
-            margin-top: -110px;
-            width: 32px; /* Đặt kích thước icon */
-            height: auto; /* Tự động điều chỉnh chiều cao */
-            cursor: pointer;
-        }
-
-        .sidebar .menu {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-item {
-            background-color: #d3d3d3;
-            padding: 10px;
-            cursor: pointer;
-            color: black;
-        }
-
-        .menu-item:hover {
-            background-color: #b0b0b0;
-        }
-
-        .submenu {
-            background-color: #00a7e1;
-            color: black;
-            display: none;
-            padding-left: 20px;
-        }
-
-        .submenu a {
-            display: block;
-            padding: 5px 0;
-            color: black;
-            text-decoration: none;
-        }
-
-        .submenu a:hover {
-            text-decoration: underline;
-        }
-
-        .menu-item.active .submenu {
-            display: block;
-        }
-
-        /* Main content */
-        .main-content {
-            margin-left: 200px;
-            padding: 20px;
-        }
-
-        .header {
-            position: relative; /* Enable absolute positioning for child elements */
-            background-color: #4CAF50;
-            padding: 20px;
-            color: white;
-            font-size: 18px;
-            margin-top: 80px;
-            text-align: center; /* Center-align the text */
-        }
-
-        .header .icons {
-            position: absolute;
-            top: -60px; /* Move the icons above the header text */
-            right: 10px; /* Align to the right */
-            display: flex;
-            gap: 30px;
-        }
-
-        .header .icons .icon {
-            font-size: 18px;
-            color: black; /* Keep text icons black */
-        }
-
-        .header .icons img {
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
-            width: 24px; /* Set icon width */
-            height: 24px; /* Set icon height */
-        }
-
-        .header .icons span {
-            font-size: 16px;
-            cursor: pointer;
-            color: black;
-        }
-
-        .welcome-text {
-            font-weight: bold;
-            z-index: 1; /* Ensure text remains visible */
-            color:black;
-            text-align: left;
-        }
-
-        .metadata-table {
-            width: 100%; /* Chiếm toàn bộ chiều ngang vùng nội dung */
-            border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
-            margin-top: 20px; /* Thêm khoảng cách trên bảng */
-            text-align: left; /* Canh trái nội dung */
-            font-size: 16px;
-        }
-
-        .metadata-table th, .metadata-table td {
-            border: 1px solid #ddd; /* Viền cho các ô */
-            padding: 8px; /* Thêm khoảng cách trong ô */
-        }
-
-        .metadata-table th {
-            background-color: #4CAF50; /* Màu nền tiêu đề bảng */
-            color: white; /* Màu chữ tiêu đề */
-            text-align: center; /* Canh giữa tiêu đề */
-        }
-
-        .metadata-table tr:nth-child(even) {
-            background-color: #f2f2f2; /* Màu nền cho các dòng chẵn */
-        }
-
-        .metadata-table tr:hover {
-            background-color: #ddd; /* Màu nền khi di chuột qua dòng */
-        }
-        
-
-        .form-inputs {
-            display: flex; /* Sắp xếp theo hàng ngang */
-            gap: 10px; /* Khoảng cách giữa các ô nhập liệu */
-            margin-bottom: 20px; /* Khoảng cách dưới các ô nhập liệu */
-            margin-top: 10px;
-        }
-
-        .form-inputs input {
-            padding: 10px; /* Thêm khoảng cách trong input */
-            border: 1px solid #ddd; /* Viền mỏng */
-            border-radius: 20px; /* Làm tròn góc input */
-            font-size: 16px;
-            width: 200px; /* Chiều rộng cố định cho các ô nhập liệu */
-        }
-
-        .form-inputs input::placeholder {
-            color: #777; /* Màu nhạt cho placeholder */
-        }
-
-        .metadata-table td.active {
-            background-color: green; /* Màu xanh cho "Đang hoạt động" */
-            color: white; /* Chữ màu trắng */
-        }
-
-        .metadata-table td.inactive {
-            background-color: black; /* Màu đen cho "Tắt" */
-            color: white; /* Chữ màu trắng */
-        }
-
-
-    </style>
-    <script>
-        // JavaScript to toggle submenu
-        function toggleMenu(event) {
-            const menuItem = event.currentTarget;
-            menuItem.classList.toggle('active');
-        }
-    </script>
+    <title>SPSO | Configure</title>
+    <link rel="icon" href=
+"https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png"
+        type="image/x-icon" />
+  <%- include('../partials/style'); %>
 </head>
 <body>
+    <%- include('../partials/navbar-spso'); %>
+    <h2 class="mt-3 mb-3 text-center">Configuration Settings</h2>
 
-    <!-- Logo container placed above sidebar -->
-    <div class="logo-container">
-        <img src="01_logobachkhoatoi.png" alt="Logo">
-    </div>
-
-    <div class="sidebar">
-        <img class="sidebar-icon" src="icons8-align-justify-48.png" alt="Sidebar Icon">
-        <div class="menu">
-            <div class="menu-item" onclick="toggleMenu(event)">Cấu hình
-                <div class="submenu">
-                    <a href="#">Loại file</a>
-                    <a href="#">Ngày đưa giấy</a>
-                    <a href="#">Số lượng giấy</a>
+    <div class="container">
+        <div id="configForm">
+            <div class="form-group mt-3">
+                <label class="fs-5" for="defaultPages">Default number of pages:</label>
+                <input type="text" id="defaultPages" class="form-control" value="50" readonly>
+            </div>
+            <div class="form-group mt-3">
+                <label class="fs-5" for="givingDate">Date of giving pages:</label>
+                <input type="date" id="givingDate" class="form-control" value="2024-01-01" readonly>
+            </div>
+            <div class="form-group mt-3">
+                <label class="fs-5 mb-1">Allowed file types:</label>
+                <div class="checkbox-group" id="fileTypes">
+                    <!-- Initially checked file types -->
+                    <label><input type="checkbox" class="file-type" value="pdf" checked disabled> PDF</label>
+                    <label><input type="checkbox" class="file-type" value="docx" checked disabled> DOCX</label>
+                    <label><input type="checkbox" class="file-type" value="pptx" checked disabled> PPTX</label>
+                    <label><input type="checkbox" class="file-type" value="jpg" disabled> JPG</label>
+                    <label><input type="checkbox" class="file-type" value="png" disabled> PNG</label>
                 </div>
             </div>
-            <div class="menu-item" onclick="toggleMenu(event)">Quản lý máy in
-                <div class="submenu">
-                    <a href="#">Thêm</a>
-                    <a href="#">Tiến độ lắp đặt</a>
-                    <a href="#">Trạng thái và bảo trì</a>
-                </div>
+            <div class="mt-3 text-center d-grid gap-2">
+                <button class="btn btn-outline-dark" onclick="editConfig()">Edit</button>
+            </div>
+            <div class="text-center d-grid gap-2">
+                <button class="btn btn-outline-success" onclick="saveConfig()" style="display: none;" id="saveButton">Save</button>
             </div>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <div class="icons">
-                <span class="icon">Lịch sử in</span> <!-- Placeholder for bell icon -->
-                <span class="icon">Báo Cáo</span> <!-- Placeholder for user icon -->
-                <img class="icon" src="icons8-notification-48.png" alt="Notification Icon" width="32" height="32">
-                <img class="icon" src="icons8-user-32.png" alt="User Icon" width="45" height="45">
-            </div>
-            <div class="welcome-text">Số lượng giấy mặc định</div>
-        </div>
+    <script>
+        // Store the original configuration values to compare later
+        const originalConfig = {
+            defaultPages: '50',
+            givingDate: '2024-01-01',
+            fileTypes: ['pdf', 'docx', 'pptx']
+        };
 
-        <div class="metadata-table" style="border: 1px solid #ddd; border-radius: 15px; padding: 10px; margin-bottom: 20px; height: 100px; display: flex; flex-direction: column; justify-content: center; text-align: left;">
-            <p style="font-weight: bold; margin: 0;">Số lượng giấy mặc định của hệ thống:</p>
-            <p style="margin: 0;">2000</p>
-        </div>
-    
-        
-        <!-- Second Table (Form to set paper amount) -->
-        <div class="form-inputs" style="border: 1px solid #ddd; border-radius: 15px; padding: 20px; height: auto; width: 100%;">
-            <!-- Label on its own line -->
-            <div style="margin-bottom: 10px;">
-                <label for="paper-amount" style="display: block; margin-bottom: 5px;">Nhập giá trị cho số lượng giấy mặc định</label>
-                
-                <!-- Input field on its own line with increased width -->
-                <input type="text" id="paper-amount" placeholder="Ví dụ: 50" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+        function editConfig() {
+            // Enable form inputs for editing
+            document.getElementById('defaultPages').removeAttribute('readonly');
+            document.getElementById('givingDate').removeAttribute('readonly');
 
-                 <!-- Buttons with margin-top added to move them down -->
-                <div style="margin-top: 15px;">
-                    <button type="reset" style="padding: 10px 20px; margin-right: 10px; display: inline-block">Đặt lại</button>
-                    <button type="submit" style="padding: 10px 20px; display: inline-block; background-color: black; color: white;">Gửi</button>
-                </div>
-            </div>
-            
-            
-        </div>
+            // Enable checkboxes for file types
+            const checkboxes = document.querySelectorAll('.file-type');
+            checkboxes.forEach(checkbox => {
+                checkbox.disabled = false;  // Enable checkboxes
+            });
 
+            // Hide the Edit button and show the Save button
+            document.querySelector('.btn-outline-dark').style.display = 'none';
+            document.getElementById('saveButton').style.display = 'inline-block';
+        }
 
-    </div>
+        function saveConfig() {
+            // Get the updated values
+            const defaultPages = document.getElementById('defaultPages').value;
+            const givingDate = document.getElementById('givingDate').value;
 
+            // Get selected file types
+            const selectedFileTypes = [];
+            const checkboxes = document.querySelectorAll('.file-type:checked');
+            checkboxes.forEach(checkbox => {
+                selectedFileTypes.push(checkbox.value);
+            });
+
+            // Check if anything has changed
+            const hasChanges = defaultPages !== originalConfig.defaultPages ||
+                givingDate !== originalConfig.givingDate ||
+                !arraysEqual(selectedFileTypes, originalConfig.fileTypes);
+
+            if (hasChanges) {
+                // Confirm the changes
+                const confirmed = confirm("Are you sure you want to save these changes?");
+                if (confirmed) {
+                    // Update the original values to the new ones
+                    originalConfig.defaultPages = defaultPages;
+                    originalConfig.givingDate = givingDate;
+                    originalConfig.fileTypes = selectedFileTypes;
+
+                    // Disable editing
+                    document.getElementById('defaultPages').setAttribute('readonly', 'true');
+                    document.getElementById('givingDate').setAttribute('readonly', 'true');
+
+                    // Disable checkboxes
+                    const checkboxes = document.querySelectorAll('.file-type');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.disabled = true; // Disable checkboxes after saving
+                    });
+
+                    // Hide the Save button and show the Edit button
+                    document.getElementById('saveButton').style.display = 'none';
+                    document.querySelector('.btn-outline-dark').style.display = 'inline-block';
+
+                    // Alert the user about the changes
+                    alert(`Configuration updated:\n\nDefault Pages: ${defaultPages}\nGiving Date: ${givingDate}\nAllowed File Types: ${selectedFileTypes.join(', ')}`);
+                }
+            } else {
+                // If there are no changes, just hide the Save button and show the Edit button
+                document.getElementById('saveButton').style.display = 'none';
+                document.querySelector('.btn-outline-dark').style.display = 'inline-block';
+            }
+        }
+
+        // Helper function to compare arrays (file types)
+        function arraysEqual(arr1, arr2) {
+            if (arr1.length !== arr2.length) return false;
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1[i] !== arr2[i]) return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

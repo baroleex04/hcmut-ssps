@@ -3,276 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPSO Home Page</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Logo container */
-        .logo-container {
-            width: 200px;
-            background-color: white;
-            padding: 0px;
-            padding-left: 10px; /* Adjust padding to move logo closer to the left edge */
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            text-align: left; /* Align logo to the left */
-        }
-
-        .logo-container img {
-            width: 120px; /* Increase width to make logo larger */
-            height: auto;
-        }
-
-        /* Sidebar styles */
-        .sidebar {
-            width: 200px;
-            background-color: #00a7e1;
-            color: white;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            padding-top: 120px; /* Add padding to push menu below the logo */
-            margin-top: 100px;
-        }
-
-        .sidebar-icon {
-            margin: 10px left; /* Căn giữa icon trong sidebar */
-            margin-top: -110px;
-            width: 32px; /* Đặt kích thước icon */
-            height: auto; /* Tự động điều chỉnh chiều cao */
-            cursor: pointer;
-        }
-
-        .sidebar .menu {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-item {
-            background-color: #d3d3d3;
-            padding: 10px;
-            cursor: pointer;
-            color: black;
-        }
-
-        .menu-item:hover {
-            background-color: #b0b0b0;
-        }
-
-        .submenu {
-            background-color: #00a7e1;
-            color: black;
-            display: none;
-            padding-left: 20px;
-        }
-
-        .submenu a {
-            display: block;
-            padding: 5px 0;
-            color: black;
-            text-decoration: none;
-        }
-
-        .submenu a:hover {
-            text-decoration: underline;
-        }
-
-        .menu-item.active .submenu {
-            display: block;
-        }
-
-        /* Main content */
-        .main-content {
-            margin-left: 200px;
-            padding: 20px;
-        }
-
-        .header {
-            position: relative; /* Enable absolute positioning for child elements */
-            background-color: #4CAF50;
-            padding: 20px;
-            color: white;
-            font-size: 18px;
-            margin-top: 80px;
-            text-align: center; /* Center-align the text */
-        }
-
-        .header .icons {
-            position: absolute;
-            top: -60px; /* Move the icons above the header text */
-            right: 10px; /* Align to the right */
-            display: flex;
-            gap: 30px;
-        }
-
-        .header .icons .icon {
-            font-size: 18px;
-            color: black; /* Keep text icons black */
-        }
-
-        .header .icons img {
-            cursor: pointer;
-            display: inline-block;
-            vertical-align: middle;
-            width: 24px; /* Set icon width */
-            height: 24px; /* Set icon height */
-        }
-
-        .header .icons span {
-            font-size: 16px;
-            cursor: pointer;
-            color: black;
-        }
-
-        .welcome-text {
-            font-weight: bold;
-            z-index: 1; /* Ensure text remains visible */
-            color:black;
-            text-align: left;
-        }
-
-        .metadata-table {
-            width: 100%; /* Chiếm toàn bộ chiều ngang vùng nội dung */
-            border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
-            margin-top: 20px; /* Thêm khoảng cách trên bảng */
-            text-align: left; /* Canh trái nội dung */
-            font-size: 16px;
-        }
-
-        .metadata-table th, .metadata-table td {
-            border: 1px solid #ddd; /* Viền cho các ô */
-            padding: 8px; /* Thêm khoảng cách trong ô */
-        }
-
-        .metadata-table th {
-            background-color: #4CAF50; /* Màu nền tiêu đề bảng */
-            color: white; /* Màu chữ tiêu đề */
-            text-align: center; /* Canh giữa tiêu đề */
-        }
-
-        .metadata-table tr:nth-child(even) {
-            background-color: #f2f2f2; /* Màu nền cho các dòng chẵn */
-        }
-
-        .metadata-table tr:hover {
-            background-color: #ddd; /* Màu nền khi di chuột qua dòng */
-        }
-        
-
-        .form-inputs {
-            display: flex; /* Sắp xếp theo hàng ngang */
-            gap: 10px; /* Khoảng cách giữa các ô nhập liệu */
-            margin-bottom: 20px; /* Khoảng cách dưới các ô nhập liệu */
-            margin-top: 10px;
-        }
-
-        .form-inputs input {
-            padding: 10px; /* Thêm khoảng cách trong input */
-            border: 1px solid #ddd; /* Viền mỏng */
-            border-radius: 20px; /* Làm tròn góc input */
-            font-size: 16px;
-            width: 200px; /* Chiều rộng cố định cho các ô nhập liệu */
-        }
-
-        .form-inputs input::placeholder {
-            color: #777; /* Màu nhạt cho placeholder */
-        }
-
-
-    </style>
-    <script>
-        // JavaScript to toggle submenu
-        function toggleMenu(event) {
-            const menuItem = event.currentTarget;
-            menuItem.classList.toggle('active');
-        }
-    </script>
+    <title>SPSO | Log</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" type="image/x-icon" />
+    <%- include('../partials/style'); %>
 </head>
 <body>
+    <!-- Include Navbar (if you have one) -->
+    <%- include('../partials/navbar-spso'); %>
 
-    <!-- Logo container placed above sidebar -->
-    <div class="logo-container">
-        <img src="01_logobachkhoatoi.png" alt="Logo">
-    </div>
+    <div class="container">
+        <h1 class="text-center mb-3 mt-3">Printing Log</h1>
 
-    <div class="sidebar">
-        <img class="sidebar-icon" src="icons8-align-justify-48.png" alt="Sidebar Icon">
-        <div class="menu">
-            <div class="menu-item" onclick="toggleMenu(event)">Cấu hình
-                <div class="submenu">
-                    <a href="#">Loại file</a>
-                    <a href="#">Ngày đưa giấy</a>
-                    <a href="#">Số lượng giấy</a>
+        <div class="row mb-2">
+            <!-- Search Bar Section -->
+            <div class="col-md-6 d-flex">
+                <div class="mb-2 flex-grow-1 me-3">
+                    <select id="searchCriteria" class="form-select" onchange="searchTable()">
+                        <option value="name">Student's Name</option>
+                        <option value="printer">Printer</option>
+                        <option value="fileName">File Name</option>
+                        <option value="fileType">File Type</option>
+                        <option value="pages">No of Pages</option>
+                        <option value="price">Price</option>
+                    </select>
+                </div>
+                <div class="mb-2 flex-grow-1">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search" oninput="searchTable()">
                 </div>
             </div>
-            <div class="menu-item" onclick="toggleMenu(event)">Quản lý máy in
-                <div class="submenu">
-                    <a href="#">Thêm</a>
-                    <a href="#">Tiến độ lắp đặt</a>
-                    <a href="#">Trạng thái và bảo trì</a>
+        
+            <!-- Date Range Filter Section -->
+            <div class="col-md-6 d-flex">
+                <div class="mb-2 flex-grow-1 me-3 d-flex align-items-center">
+                    <label for="startDate" class="form-label mb-0 me-2">From</label>
+                    <input type="date" id="startDate" class="form-control" onchange="filterByDate()">
                 </div>
-            </div>
+                <div class="mb-2 flex-grow-1 d-flex align-items-center">
+                    <label for="endDate" class="form-label mb-0 me-2">To</label>
+                    <input type="date" id="endDate" class="form-control" onchange="filterByDate()">
+                </div>
+            </div>            
+        </div>        
+
+        <!-- Sort by Time Button -->
+        <div class="mb-2">
+            <button class="btn btn-outline-dark" onclick="sortByTime()">Sort by Time</button>
+        </div>
+
+        <!-- Table to Display Printing Log -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="logTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student's Name</th>
+                        <th>Printer</th>
+                        <th>File Name</th>
+                        <th>File Type</th>
+                        <th>No of pages</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>Printer A</td>
+                        <td>Assignment1</td>
+                        <td>PDF</td>
+                        <td>10</td>
+                        <td>$2</td>
+                        <td>2024-12-01</td>
+                        <td>10:30</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Jane Smith</td>
+                        <td>Printer B</td>
+                        <td>LectureNotes</td>
+                        <td>DOCX</td>
+                        <td>5</td>
+                        <td>$1.5</td>
+                        <td>2024-12-02</td>
+                        <td>12:15</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Samuel Lee</td>
+                        <td>Printer A</td>
+                        <td>Presentation</td>
+                        <td>PPTX</td>
+                        <td>15</td>
+                        <td>$3</td>
+                        <td>2024-12-01</td>
+                        <td>14:00</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Alice Johnson</td>
+                        <td>Printer C</td>
+                        <td>ResearchPaper</td>
+                        <td>PDF</td>
+                        <td>20</td>
+                        <td>$4</td>
+                        <td>2024-12-03</td>
+                        <td>09:45</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Michael Brown</td>
+                        <td>Printer B</td>
+                        <td>ProjectPlan</td>
+                        <td>DOCX</td>
+                        <td>8</td>
+                        <td>$2</td>
+                        <td>2024-12-03</td>
+                        <td>11:30</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <div class="icons">
-                <span class="icon">Lịch sử in</span> <!-- Placeholder for bell icon -->
-                <span class="icon">Báo Cáo</span> <!-- Placeholder for user icon -->
-                <img class="icon" src="icons8-notification-48.png" alt="Notification Icon" width="32" height="32">
-                <img class="icon" src="icons8-user-32.png" alt="User Icon" width="45" height="45">
-            </div>
-            <div class="welcome-text">Lịch sử in</div>
-        </div>
+    <!-- Include Bootstrap JS -->
+    <%- include('../partials/footer'); %>
+    <script>
+        // Function to search based on selected criteria
+        function searchTable() {
+            const searchCriteria = document.getElementById('searchCriteria').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            
+            const rows = document.getElementById('logTable').getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
 
-        <div class="form-inputs">
-            <input type="text" placeholder="Tên sinh viên">
-            <input type="text" placeholder="Máy in">
-            <input type="date" placeholder="Ngày">
-        </div>
+                // Based on the selected criteria, compare the corresponding column
+                switch (searchCriteria) {
+                    case 'name':
+                        match = cells[1].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'printer':
+                        match = cells[2].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'fileName':
+                        match = cells[3].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'fileType':
+                        match = cells[4].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'pages':
+                        match = cells[5].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'price':
+                        match = cells[6].textContent.toLowerCase().includes(searchInput);
+                        break;
+                }
 
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
 
-        <table class="metadata-table">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Sinh viên</th>
-                    <th>Tài liệu</th>
-                    <th>Máy in</th>
-                    <th>Ngày</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>Báo cáo thực tập</td>
-                    <td>Máy in 01</td>
-                    <td>2024-11-16</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Trần Thị B</td>
-                    <td>Luận văn tốt nghiệp</td>
-                    <td>Máy in 02</td>
-                    <td>2024-11-15</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        // Function to filter logs by date range
+        function filterByDate() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const rows = document.getElementById('logTable').getElementsByTagName('tr');
 
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const date = cells[7].textContent;
+
+                const isInRange = (!startDate || date >= startDate) && (!endDate || date <= endDate);
+                rows[i].style.display = isInRange ? '' : 'none';
+            }
+        }
+
+        // Function to sort rows based on Date and Time columns
+        function sortByTime() {
+            const rows = Array.from(document.getElementById('logTable').rows).slice(1);
+            rows.sort((rowA, rowB) => {
+                const dateA = rowA.cells[7].textContent + ' ' + rowA.cells[8].textContent;
+                const dateB = rowB.cells[7].textContent + ' ' + rowB.cells[8].textContent;
+                return new Date(dateA) - new Date(dateB);
+            });
+
+            // Re-append rows in sorted order
+            const tableBody = document.getElementById('logTable').getElementsByTagName('tbody')[0];
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+    </script>
 </body>
 </html>
