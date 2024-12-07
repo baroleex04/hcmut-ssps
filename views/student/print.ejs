@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student | Print</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png"
+        type="image/x-icon" />
+    <%- include('../partials/style'); %>
+        <style>
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .upload-container {
+                text-align: center;
+            }
+
+            .preview-container {
+                text-align: center;
+                flex-grow: 1;
+            }
+
+            #fileInput {
+                margin-bottom: 15px;
+            }
+
+            #previewContainer img,
+            #previewContainer canvas {
+                max-width: 100%;
+                height: auto;
+                border: 1px solid #ddd;
+            }
+
+            .page-navigation {
+                margin-top: 15px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .page-navigation button {
+                margin: 0 10px;
+            }
+
+            .print-settings {
+                max-width: 300px;
+            }
+
+            .preview-container {
+                max-width: 100%;
+                overflow: auto;
+            }
+
+            .form-group {
+                margin-bottom: 5px;
+            }
+
+            .btn-custom {
+                background-color: #007bff;
+                color: white;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('../partials/navbar-student'); %>
+        <h1 class="text-center mt-3 mb-3">Print Document</h1>
+        <!-- Main Content Area -->
+        <div class="container">
+            <!-- Left side: Print settings -->
+            <div class="print-settings">
+                <h3>Print Settings</h3>
+                <div class="upload-container form-group">
+                    <input type="file" class="form-control" id="fileInput" accept="image/*,application/pdf" />
+                    <div id="fileName" style="margin-top: 10px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="copyCount">Copies:</label>
+                    <input type="number" class="form-control" id="copyCount" value="1" min="1" max="100" />
+                </div>
+
+                <div class="form-group">
+                    <label for="printerSelect">Printer</label>
+                    <select id="printerSelect" class="form-select">
+                        <option value="printer1">Printer 1 (A5-101)</option>
+                        <option value="printer2">Printer 2 (B4-202)</option>
+                        <option value="printer3">Printer 3 (C5-103)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="pageRange">Pages:</label>
+                    <input type="text" class="form-control" id="pageRange" placeholder="Enter page range (e.g., 1-5)" />
+                </div>
+
+                <div class="form-group">
+                    <select id="pageOrientation" class="form-select">
+                        <option value="portrait">Portrait Orientation</option>
+                        <option value="landscape">Landscape Orientation</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <select id="pageSize" class="form-select">
+                        <option value="A4">A4</option>
+                        <option value="A3">A3</option>
+                        <option value="letter">Letter</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <button id="printButton" class="btn btn-outline-primary w-100">Print</button>
+                </div>
+            </div>
+
+            <!-- Right side: Preview Section -->
+            <div class="preview-container">
+                <div id="previewContainer">
+                    <h3>File Preview</h3>
+                    <div id="previewImageContainer">
+                        <!-- Image or PDF preview will appear here -->
+                    </div>
+                    <div class="page-navigation" id="pageNavButtons">
+                        <!-- Page navigation buttons will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../partials/footer'); %>
+
+            <!-- PDF.js Library -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+            <script>
+                const fileInput = document.getElementById('fileInput');
+                const previewContainer = document.getElementById('previewContainer');
+                const previewImageContainer = document.getElementById('previewImageContainer');
+                const pageNavButtons = document.getElementById('pageNavButtons');
+                const fileName = document.getElementById('fileName');
+                const printButton = document.getElementById('printButton');
+                const pageRangeInput = document.getElementById('pageRange');
+                const pageOrientationSelect = document.getElementById('pageOrientation');
+                const pageSizeSelect = document.getElementById('pageSize');
+                const printerSelect = document.getElementById('printerSelect');
+                const copyCountInput = document.getElementById('copyCount');
+
+                let currentPage = 1;
+                let totalPages = 0;
+                let pdfDoc = null;
+                let selectedPageRange = { start: 1, end: 0 };
+
+                // Handle file upload
+                fileInput.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    const fileType = file.type;
+
+                    fileName.textContent = `Selected File: ${file.name}`;
+                    previewImageContainer.innerHTML = '';
+                    pageNavButtons.innerHTML = '';
+
+                    if (fileType.startsWith('image')) {
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            previewImageContainer.appendChild(img);
+                            previewContainer.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else if (fileType === 'application/pdf') {
+                        const reader = new FileReader();
+                        reader.onload = function (event) {
+                            const loadingTask = pdfjsLib.getDocument(event.target.result);
+                            loadingTask.promise.then(function (pdf) {
+                                pdfDoc = pdf;
+                                totalPages = pdfDoc.numPages;
+                                selectedPageRange.end = totalPages;
+                                renderPage(currentPage);
+                                updatePageNavigation();
+                            });
+                        };
+                        reader.readAsArrayBuffer(file);
+                    }
+                });
+
+                function renderPage(pageNumber) {
+                    if (pdfDoc && pageNumber >= selectedPageRange.start && pageNumber <= selectedPageRange.end) {
+                        pdfDoc.getPage(pageNumber).then(function (page) {
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            const viewport = page.getViewport({ scale: 0.5 });
+                            canvas.width = viewport.width;
+                            canvas.height = viewport.height;
+
+                            page.render({ canvasContext: context, viewport: viewport }).promise.then(function () {
+                                previewImageContainer.innerHTML = '';
+                                previewImageContainer.appendChild(canvas);
+                                previewContainer.style.display = 'block';
+
+                                updatePageNavigation();
+                            });
+                        });
+                    }
+                }
+
+                // Update page navigation buttons based on current page and total pages
+                function updatePageNavigation() {
+                    pageNavButtons.innerHTML = ''; // Clear existing buttons
+
+                    // Previous button
+                    const prevButton = document.createElement('button');
+                    prevButton.textContent = 'Previous';
+                    prevButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'mx-2'); // Bootstrap classes
+                    prevButton.disabled = currentPage === selectedPageRange.start;
+                    prevButton.onclick = function () {
+                        if (currentPage > selectedPageRange.start) {
+                            currentPage--;
+                            renderPage(currentPage);
+                        }
+                    };
+
+                    // Next button
+                    const nextButton = document.createElement('button');
+                    nextButton.textContent = 'Next';
+                    nextButton.classList.add('btn', 'btn-primary', 'btn-sm', 'mx-2'); // Bootstrap classes
+                    nextButton.disabled = currentPage === selectedPageRange.end;
+                    nextButton.onclick = function () {
+                        if (currentPage < selectedPageRange.end) {
+                            currentPage++;
+                            renderPage(currentPage);
+                        }
+                    };
+
+                    // Append the buttons to the pageNavButtons container
+                    pageNavButtons.appendChild(prevButton);
+                    pageNavButtons.appendChild(nextButton);
+                }
+
+
+                printButton.addEventListener('click', function () {
+                    const orientation = pageOrientationSelect.value;
+                    const pageSize = pageSizeSelect.value;
+                    const pageRange = pageRangeInput.value;
+                    const printer = printerSelect.value;
+                    const copies = parseInt(copyCountInput.value);
+
+                    if (pageRange) {
+                        const [startPage, endPage] = pageRange.split('-').map(Number);
+                        if (isNaN(startPage) || isNaN(endPage) || startPage < 1 || endPage < 1 || startPage > totalPages || endPage > totalPages || startPage > endPage) {
+                            alert('Please enter a valid page range.');
+                            return;
+                        }
+                        selectedPageRange = { start: startPage, end: endPage };
+                    } else {
+                        selectedPageRange = { start: 1, end: totalPages };
+                    }
+
+                    const totalPagesInRange = selectedPageRange.end - selectedPageRange.start + 1;
+                    const price = totalPagesInRange * 0.05 * 25000;
+
+                    const formattedPrice = price.toLocaleString('vi-VN');
+
+                    const confirmation = confirm(`Print Settings:
+                Printer: ${printer}
+                Copies: ${copies}
+                Orientation: ${orientation}
+                Page Size: ${pageSize}
+                Page Range: ${selectedPageRange.start} to ${selectedPageRange.end}
+                Price: ${formattedPrice} VNĐ\n
+                Do you want to proceed?`);
+
+                    if (confirmation) {
+                        window.location.href = "/student/print";
+                        alert(`Documents have been sent to printer, please collect at ${printer}!`);
+                    }
+                });
+            </script>
+</body>
+
+</html>
