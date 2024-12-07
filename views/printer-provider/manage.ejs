@@ -1,115 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printer-Provider | Manage</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body {
-            height: 100vh;
-            width: 100%;
-            font-family: sans-serif;
-            background: #f2f2f2;
-        }
-
-        .container {
-            max-width: 80%;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-gap: 40px;
-            place-items: center;
-            margin: auto;
-            padding: 50px;
-        }
-
-        .box {
-            background: white;
-            text-align: center;
-            box-shadow: -1px 0px 5px 5px rgba(0, 0, 0, 0);
-        }
-
-        .container img {
-            width: 100px;
-            height: 100%;
-        }
-
-        .text {
-            padding: 20px;
-        }
-
-        .text h3 {
-            font-size: 15px;
-        }
-
-        .text p {
-            font-size: 14px;
-            line-height: 18px;
-            margin: 10px 0 10px 0;
-        }
-
-        .button {
-            background: #27c8a4;
-            padding: 15px;
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-        }
-
-        button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            color: white;
-        }
-    </style>
+    <title>Printer | Manage</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" type="image/x-icon" />
+    <%- include('../partials/style'); %>
 </head>
+
 <body>
-    <h1>Manage Printer</h1>
-    <div class="container">
-        <% if (printers.length) { %>
-            <% printers.forEach(printer => { %>
-                <div class="box">
-                    <div class="text">
-                        <h3><%= printer.name %><br /></h3>
-                        <p><%= printer.status %></p>
-                    </div>
-                    <div class="button">
-                        <!-- Edit button -->
-                        <a href="/printer/detail/<%= printer.id %>">Edit</a>
-                    </div>
-                </div>
-            <% }) %>
-        <% } else { %>
-            <p>No printers available.</p>
-        <% } %>
+    <%- include('../partials/navbar-printer'); %>
+
+    <h1 class="mt-3 mb-3 text-center">Printers Status</h1>
+
+    <!-- Search Bar Section -->
+    <div class="text-center mb-2 col-12">
+        <select id="searchCriteria" class="search-criteria">
+            <option value="printer" selected>Printer Name</option>
+            <option value="location">Location</option>
+            <option value="id">ID</option>
+            <option value="status">Status</option>
+            <option value="action">Action</option>
+        </select>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search" oninput="checkSearch()">
+        <a href="/printer/add" class="btn btn-outline-secondary">Add New Printer</a>
     </div>
 
-    <h1>Add Printer</h1>
-    <form action="/printer/add" method="post">
-        <div>
-            <label for="name">Printer Name:</label>
-            <input type="text" id="name" name="name" required />
-        </div>
-        <div>
-            <label for="status">Status:</label>
-            <select id="status" name="status" required>
-                <option value="Online">Online</option>
-                <option value="Offline">Offline</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit" style="color: black;">Add Printer</button>
-        </div>
-    </form>
+    <!-- Printer Status Table -->
+    <div>
+        <table class="table table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th class="col-1">ID</th>
+                    <th class="col-3">Printer</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="text-center" id="printerTable">
+                <tr>
+                    <td>1</td>
+                    <td>Printer 1</td>
+                    <td>Good</td>
+                    <td>A5-101</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="toggleButton(this)">Disable</button>
+                        <a href="/printer/edit?id=1" class="btn btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Printer 2</td>
+                    <td>Normal</td>
+                    <td>B4-302</td>
+                    <td>
+                        <button class="btn btn-success" onclick="toggleButton(this)">Enable</button>
+                        <a href="/printer/edit?id=2" class="btn btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                <!-- Add more printers here -->
+            </tbody>
+        </table>
+    </div>
+
+    <%- include('../partials/footer'); %>
+
+    <script>
+        // Function to filter the table based on the search input and selected criteria
+        function filterTable(searchInput) {
+            const searchCriteria = document.getElementById('searchCriteria').value;
+            const rows = document.getElementById('printerTable').getElementsByTagName('tr');
+
+            // Loop through all table rows and hide those that don't match the search input
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+
+                // Check the appropriate column based on selected criteria
+                if (searchCriteria === 'printer') {
+                    // Search by Printer Name (2nd column)
+                    if (cells[1].textContent.toLowerCase().indexOf(searchInput) > -1) {
+                        found = true;
+                    }
+                } else if (searchCriteria === 'location') {
+                    // Search by Location (4th column)
+                    if (cells[3].textContent.toLowerCase().indexOf(searchInput) > -1) {
+                        found = true;
+                    }
+                } else if (searchCriteria === 'id') {
+                    // Search by ID (1st column)
+                    if (cells[0].textContent.toLowerCase().indexOf(searchInput) > -1) {
+                        found = true;
+                    }
+                } else if (searchCriteria === 'status') {
+                    // Search by Status (3rd column)
+                    if (cells[2].textContent.toLowerCase().indexOf(searchInput) > -1) {
+                        found = true;
+                    }
+                } else if (searchCriteria === 'action') {
+                    // Search by Action (5th column)
+                    if (cells[4].textContent.toLowerCase().indexOf(searchInput) > -1) {
+                        found = true;
+                    }
+                }
+
+                // Display the row if there's a match, otherwise hide it
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        // Function to check if search input is valid
+        function checkSearch() {
+            const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (searchInput) {
+                filterTable(searchInput);
+            } else {
+                // If no input, show all rows
+                const rows = document.getElementById('printerTable').getElementsByTagName('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    rows[i].style.display = '';
+                }
+            }
+        }
+
+        // Function to toggle the "Enable" and "Disable" button with confirmation
+        function toggleButton(button) {
+            const currentState = button.classList.contains('btn-danger') ? 'Disable' : 'Enable';
+            const nextState = currentState === 'Disable' ? 'Enable' : 'Disable';
+
+            const confirmed = confirm(`Are you sure you want to change the action to "${nextState}"?`);
+
+            if (confirmed) {
+                if (currentState === 'Disable') {
+                    button.textContent = 'Enable';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
+                } else {
+                    button.textContent = 'Disable';
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-danger');
+                }
+            }
+        }
+    </script>
 </body>
+
 </html>

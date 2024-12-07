@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student | Printing Log</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" type="image/x-icon" />
+    <%- include('../partials/style'); %>
+</head>
+
+<body>
+    <!-- Include Navbar (if you have one) -->
+    <%- include('../partials/navbar-student'); %>
+
+    <div class="container">
+        <h1 class="text-center mb-3 mt-3">Printing Log</h1>
+
+        <div class="row mb-2">
+            <!-- Search Bar Section -->
+            <div class="col-md-6 d-flex">
+                <div class="mb-2 flex-grow-1 me-3">
+                    <select id="searchCriteria" class="form-select" onchange="searchTable()">
+                        <option value="fileName">File Name</option>
+                        <option value="printer">Printer</option>
+                        <option value="fileType">File Type</option>
+                        <option value="pages">No of Pages</option>
+                        <option value="price">Price</option>
+                    </select>
+                </div>
+                <div class="mb-2 flex-grow-1">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search" oninput="searchTable()">
+                </div>
+            </div>
+        
+            <!-- Date Range Filter Section -->
+            <div class="col-md-6 d-flex">
+                <div class="mb-2 flex-grow-1 me-3 d-flex align-items-center">
+                    <label for="startDate" class="form-label mb-0 me-2">From</label>
+                    <input type="date" id="startDate" class="form-control" onchange="filterByDate()">
+                </div>
+                <div class="mb-2 flex-grow-1 d-flex align-items-center">
+                    <label for="endDate" class="form-label mb-0 me-2">To</label>
+                    <input type="date" id="endDate" class="form-control" onchange="filterByDate()">
+                </div>
+            </div>            
+        </div>        
+
+        <!-- Sort by Time Button -->
+        <div class="mb-2">
+            <button class="btn btn-outline-dark" onclick="sortByTime()">Sort by Time</button>
+        </div>
+
+        <!-- Table to Display Printing Log -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="logTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Printer</th>
+                        <th>File Name</th>
+                        <th>File Type</th>
+                        <th>No of Pages</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Printer A</td>
+                        <td>Assignment1</td>
+                        <td>PDF</td>
+                        <td>10</td>
+                        <td>50.000₫</td> <!-- Price in VNĐ -->
+                        <td>2024-12-01</td>
+                        <td>10:30</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Printer B</td>
+                        <td>LectureNotes</td>
+                        <td>DOCX</td>
+                        <td>5</td>
+                        <td>25.000₫</td> <!-- Price in VNĐ -->
+                        <td>2024-12-02</td>
+                        <td>12:15</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Printer A</td>
+                        <td>Presentation</td>
+                        <td>PPTX</td>
+                        <td>15</td>
+                        <td>75.000₫</td> <!-- Price in VNĐ -->
+                        <td>2024-12-01</td>
+                        <td>14:00</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Printer C</td>
+                        <td>ResearchPaper</td>
+                        <td>PDF</td>
+                        <td>20</td>
+                        <td>100.000₫</td> <!-- Price in VNĐ -->
+                        <td>2024-12-03</td>
+                        <td>09:45</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Printer B</td>
+                        <td>ProjectPlan</td>
+                        <td>DOCX</td>
+                        <td>8</td>
+                        <td>40.000₫</td> <!-- Price in VNĐ -->
+                        <td>2024-12-03</td>
+                        <td>11:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <%- include('../partials/footer'); %>
+    <script>
+        // Function to search based on selected criteria
+        function searchTable() {
+            const searchCriteria = document.getElementById('searchCriteria').value;
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            
+            const rows = document.getElementById('logTable').getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+
+                // Based on the selected criteria, compare the corresponding column
+                switch (searchCriteria) {
+                    case 'fileName':
+                        match = cells[2].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'printer':
+                        match = cells[1].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'fileType':
+                        match = cells[3].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'pages':
+                        match = cells[4].textContent.toLowerCase().includes(searchInput);
+                        break;
+                    case 'price':
+                        match = cells[5].textContent.toLowerCase().includes(searchInput.replace('₫', '').trim());
+                        break;
+                }
+
+                rows[i].style.display = match ? '' : 'none';
+            }
+        }
+
+        // Function to filter logs by date range
+        function filterByDate() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const rows = document.getElementById('logTable').getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const date = cells[6].textContent;
+
+                const isInRange = (!startDate || date >= startDate) && (!endDate || date <= endDate);
+                rows[i].style.display = isInRange ? '' : 'none';
+            }
+        }
+
+        // Function to sort rows based on Date and Time columns
+        function sortByTime() {
+            const rows = Array.from(document.getElementById('logTable').rows).slice(1);
+            rows.sort((rowA, rowB) => {
+                const dateA = rowA.cells[6].textContent + ' ' + rowA.cells[7].textContent;
+                const dateB = rowB.cells[6].textContent + ' ' + rowB.cells[7].textContent;
+                return new Date(dateA) - new Date(dateB);
+            });
+
+            // Re-append rows in sorted order
+            const tableBody = document.getElementById('logTable').getElementsByTagName('tbody')[0];
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+    </script>
+</body>
+
+</html>

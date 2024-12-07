@@ -1,67 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <base href="/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student | Buy Page</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <title>Student | Buy Pages</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" type="image/x-icon" />
+    <%- include('../partials/style'); %>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
 </head>
+
 <body>
-    <header class="header">
-        <section class="flex">
-            <a href="" class="logo">HCMUT-SSPS</a>
-            <div class="icons">
-                <div id="menu-btn" class="fas fa-bars"></div>
-                <div class="fas fa-bell"></div>
-                <div id="search-btn" class="fas fa-search"></div>
-                <div id="user-btn" class="fas fa-user"></div>
-                <!-- <div id="toggle-btn" class="fas fa-sun"></div> -->
+    <%- include('../partials/navbar-student'); %>
+    <h1 class="text-center mt-3 mb-3">Buy Pages</h1>
+
+    <!-- Main Form Section -->
+    <div class="container" style="max-width: 500px;">
+        <form id="buyPagesForm">
+            <div class="form-group">
+                <label for="pageCount">Number of Pages:</label>
+                <input type="number" class="form-control" id="pageCount" value="10" min="1" />
             </div>
-            <div class="profile">
-                <img src="" alt="profile">
-                <h3>annoymous stu</h3>
-                <span>student</span>
-                <a href="/student/viewlog" class="btn">view print history</a>
-                <div class="flex-btn">
-                    <a href="" class="option-btn">logout</a>
-                    <a href="" class="option-btn">register</a>
-                </div>
+
+            <div class="form-group">
+                <label for="priceEstimate">Estimated Cost:</label>
+                <input type="text" class="form-control" id="priceEstimate" value="25000 VND" readonly />
             </div>
-        </section>
-    </header>
-    <div class="side-bar">
-        <div id="close-btn">
-            <i class="fas fa-times"></i>
-         </div>
-        <div class="profile">
-            <img src="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" alt="profile">
-            <!-- <h3>annoymous stu</h3>
-            <span>student</span>
-            <a href="" class="btn">view profile</a>
-            <div class="flex-btn">
-                <a href="" class="option-btn">login</a>
-                <a href="" class="option-btn">register</a>
-            </div> -->
-        </div>
-        <nav class="navbar">
-            <a href="/student/upload"><i class="fas fa-home"></i><span>upload</span></a>
-            <a href="/student/config"><i class="fas fa-home"></i><span>configure</span></a>
-            <a href="/student/buy-page"><i class="fas fa-home"></i><span>buying</span></a>
-            <a href="/student/gift-page"><i class="fas fa-home"></i><span>gifting</span></a>
-        </nav>
-    </div>
-    <section class="form-container">
-        <form action="" method="post">
-            <h1 class="heading">Buy Page</h3>
-            <p style="text-align: center;">Your current page : <span>111</span></p>
-            <p style="text-align: center;">Your current account balance : <span>111</span></p>
-            <p>Enter the number of page</p>
-            <input type="number" name="" id="" min="1" placeholder="Type the number greater than 0" class="box">
-            <input type="submit" value="Confirm" class="btn">
+
+            <div class="form-group">
+                <button type="button" class="btn btn-outline-primary w-100" id="buyButton">Buy Pages</button>
+            </div>
         </form>
-    </section>
-    <script src="script.js"></script>
+    </div>
+
+    <%- include('../partials/footer'); %>
+
+    <!-- JavaScript for calculation and confirmation -->
+    <script>
+        // Set initial price per page
+        const pricePerPage = 250; // Example: 2500 VND per page
+
+        const pageCountInput = document.getElementById('pageCount');
+        const priceEstimateInput = document.getElementById('priceEstimate');
+        const buyButton = document.getElementById('buyButton');
+
+        // Function to calculate the estimated price
+        function updatePriceEstimate() {
+            const pageCount = parseInt(pageCountInput.value) || 10; // Default to 10 if no valid input
+            const estimatedPrice = pageCount * pricePerPage;
+            priceEstimateInput.value = `${estimatedPrice.toLocaleString('vi-VN')} VND`; // Format as Vietnamese currency
+        }
+
+        // Call the function when the page count changes
+        pageCountInput.addEventListener('input', updatePriceEstimate);
+
+        // Initial calculation
+        updatePriceEstimate();
+
+        // Handle the buy button click
+        buyButton.addEventListener('click', function () {
+            const pageCount = parseInt(pageCountInput.value);
+            const estimatedPrice = parseInt(priceEstimateInput.value.replace(' VND', '').replace(/,/g, ''));
+
+            // Validate page count input
+            if (isNaN(pageCount) || pageCount < 1) {
+                alert("Please enter a valid number of pages.");
+                return;
+            }
+
+            // Confirm the purchase
+            const confirmation = confirm(`You are about to buy ${pageCount} pages for ${estimatedPrice.toLocaleString('vi-VN')} VND.\nDo you want to proceed?`);
+
+            if (confirmation) {
+                // If confirmed, show the success message
+                alert("Your order is received. Please go to BKPay to finish payment!");
+                // Optionally, you can reset the form or redirect user here
+                pageCountInput.value = 10; // Reset page count to 10
+                updatePriceEstimate(); // Update the price estimate to match the default
+            }
+        });
+    </script>
 </body>
+
 </html>

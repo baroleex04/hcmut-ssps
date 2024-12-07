@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Printer</title>
+    <link rel="icon" href="https://lms.hcmut.edu.vn/pluginfile.php/3/theme_academi/logo/1725955904/logoBK.png" type="image/x-icon" />
+    <%- include('../partials/style'); %>
+</head>
+
+<body>
+    <%- include('../partials/navbar-printer'); %>
+    <h1 class=" mt-3 mb-3 text-center">Add New Printer</h1>
+    <div class="container mb-2">
+        <form id="addPrinterForm">
+            <!-- Printer Name Field -->
+            <div class="form-group mb-3">
+                <label for="printerName">Printer Name</label>
+                <input type="text" class="form-control" id="printerName" placeholder="Enter Printer Name">
+            </div>
+
+            <!-- Model Name Field -->
+            <div class="form-group mb-3">
+                <label for="printerModel">Model Name</label>
+                <input type="text" class="form-control" id="printerModel" placeholder="Enter Printer Model Name">
+            </div>
+
+            <!-- Location Field -->
+            <div class="form-group mb-3">
+                <label for="printerLocation">Location</label>
+                <input type="text" class="form-control" id="printerLocation" placeholder="Enter Location">
+            </div>
+
+            <!-- Status Field -->
+            <div class="form-group mb-3">
+                <label for="printerStatus">Status</label>
+                <select class="form-control" id="printerStatus">
+                    <option value="Good">Good</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Error">Error</option>
+                </select>
+            </div>
+
+            <!-- Driver File Upload Field -->
+            <div class="form-group mb-3">
+                <label for="printerDriver">Printer Driver File</label>
+                <input type="file" class="form-control-file" id="printerDriver">
+                <small class="form-text text-muted">Upload the printer driver file (e.g., .exe, .dmg).</small>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <button type="submit" class="btn btn-primary">Add Printer</button>
+            <a href="/printer/manage" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+    <div class="mt-1">
+        <%- include('../partials/footer'); %>
+    </div>
+    <script>
+        // Simulate adding a new printer and redirecting to the management page
+        document.getElementById('addPrinterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Normally, you'd send a POST request to a backend. Here, we just redirect.
+            alert('Printer added successfully!');
+            window.location.href = "/printer/manage"; // Redirect back to the printer management page
+        });
+    </script>
+</body>
+
+</html>

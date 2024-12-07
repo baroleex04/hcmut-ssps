@@ -21,6 +21,26 @@ router.get("/manage", async (req, res) => {
     }
 });
 
+router.get("/add", async (req, res) => {
+    try {
+        // const printers = await Printer.find();
+        res.render("printer-provider/add");
+    } catch (err) {
+        console.error("Error fetching printers:", err);
+        res.status(500).send("Error fetching printers.");
+    }
+});
+
+router.get("/edit", async (req, res) => {
+    try {
+        const printers = await Printer.find();
+        res.render("printer-provider/edit", { printers });
+    } catch (err) {
+        console.error("Error fetching printers:", err);
+        res.status(500).send("Error fetching printers.");
+    }
+});
+
 router.post("/add", async (req, res) => {
     try {
         const { name, status } = req.body;
