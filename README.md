@@ -2,6 +2,10 @@
 A smart printing service for students at HCMUT
 
 ## How to run the code and login as users (without configuration of database)
+Initial setup:
+```
+npm install -g nodemon
+```
 To run the code:
 ```
 nodemon app.js

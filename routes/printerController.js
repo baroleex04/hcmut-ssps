@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const Printer = require('../db/models/printer.js');
+// const Printer = require('../db/models/printer.js');
 
 /*let printers = [    // Testing-only
     { id: 1, name: "Printer A", status: "Online" },
@@ -12,13 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/manage", async (req, res) => {
-    try {
-        const printers = await Printer.find();
-        res.render("printer-provider/manage", { printers });
-    } catch (err) {
-        console.error("Error fetching printers:", err);
-        res.status(500).send("Error fetching printers.");
-    }
+    res.render("printer-provider/manage");
 });
 
 router.get("/add", async (req, res) => {
@@ -32,34 +26,28 @@ router.get("/add", async (req, res) => {
 });
 
 router.get("/edit", async (req, res) => {
-    try {
-        const printers = await Printer.find();
-        res.render("printer-provider/edit", { printers });
-    } catch (err) {
-        console.error("Error fetching printers:", err);
-        res.status(500).send("Error fetching printers.");
-    }
+    res.render("printer-provider/edit", { printers });
 });
 
-router.post("/add", async (req, res) => {
-    try {
-        const { name, status } = req.body;
+// router.post("/add", async (req, res) => {
+//     try {
+//         const { name, status } = req.body;
 
-        const newPrinter = new Printer({ name, status });
-        await newPrinter.save(); // Save to the database
+//         const newPrinter = new Printer({ name, status });
+//         await newPrinter.save(); // Save to the database
 
-        /*const newPrinter = {
-            id: printers.length + 1, 
-            name,
-            status,
-        };
-        printers.push(newPrinter); */ // Testing-only
+//         /*const newPrinter = {
+//             id: printers.length + 1, 
+//             name,
+//             status,
+//         };
+//         printers.push(newPrinter); */ // Testing-only
 
-        res.redirect("/printer/manage"); // Redirect to the printer list
-    } catch (err) {
-        console.error("Error adding printer:", err);
-        res.status(500).send("Error adding printer.");
-    }
-});
+//         res.redirect("/printer/manage"); // Redirect to the printer list
+//     } catch (err) {
+//         console.error("Error adding printer:", err);
+//         res.status(500).send("Error adding printer.");
+//     }
+// });
 
 module.exports = router;

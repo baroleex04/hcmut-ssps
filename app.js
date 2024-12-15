@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var Database = require('./db/database');
+// var Database = require('./db/database');
 const defaultRouter = require('./routes/controller');
 const loginRouter = require('./routes/loginController.js');
 const printerRouter = require('./routes/printerController.js');
