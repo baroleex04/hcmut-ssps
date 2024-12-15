@@ -1,6 +1,14 @@
 # hcmut-ssps
 A smart printing service for students at HCMUT
 
+## How to run the code and login as users (without configuration of database)
+To run the code:
+```
+nodemon app.js
+```
+To login as SPSO - officer: enter username as 'spso' and password is random (no need for true password)
+To login as student: enter username as 'student' and password is random (no need for true password)
+To login as printer provider: enter username as 'printer' and password is random (no need for true password)
 ## Installation
 
 Use the package manager to install packages.
